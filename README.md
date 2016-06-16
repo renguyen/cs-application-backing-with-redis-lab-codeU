@@ -112,7 +112,7 @@ public class JedisMaker {
 	public static Jedis make() {
 		// assemble the directory name
 		String slash = File.separator;
-		String filename = System.getProperty("user.dir") + slash + 
+		String filename = System.getProperty("user.dir") + slash +
 				"src" + slash + "resources" + slash + "redis_url.txt";
 
 		// read the contents of the file into a string
@@ -124,18 +124,18 @@ public class JedisMaker {
 			sb.append(line);
 		}
 		br.close();
-		
+
 		// extract the components from the URI
 		URI uri = new URI(sb.toString());
 		String host = uri.getHost();
 		int port = uri.getPort();
 		String[] array = uri.getAuthority().split("[:@]");
 		String auth = array[1];
-		
+
 		// connect to the server and authenticate
 		Jedis jedis = new Jedis(host, port);
 		jedis.auth(auth);
-	
+
 		return jedis;
 	}
 ```
@@ -158,26 +158,26 @@ Now in `javacs-lab10`, run `ant build` to compile the source files and `ant Jedi
 	public static void main(String[] args) {
 
 		Jedis jedis = make();
-		
+
 		// String
 		jedis.set("mykey", "myvalue");
 		String value = jedis.get("mykey");
 		System.out.println("Got value: " + value);
-		
+
 		// Set
 		jedis.sadd("myset", "element1", "element2", "element3");
 		System.out.println("element2 is member: " + jedis.sismember("myset", "element2"));
-		
+
 		// List
 		jedis.rpush("mylist", "element1", "element2", "element3");
 		System.out.println("element at index 1: " + jedis.lindex("mylist", 1));
-		
+
 		// Hash
 		jedis.hset("myhash", "word1", Integer.toString(2));
 		jedis.hincrBy("myhash", "word2", 1);
 		System.out.println("frequency of word1: " + jedis.hget("myhash", "word1"));
 		System.out.println("frequency of word1: " + jedis.hget("myhash", "word2"));
-		
+
 		jedis.close();
 	}
 ```

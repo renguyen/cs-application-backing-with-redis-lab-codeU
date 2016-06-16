@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.flatironschool.javacs;
 
@@ -33,13 +33,13 @@ public class JedisIndexTest {
 	public void setUp() throws Exception {
 		jedis = JedisMaker.make();
 		index = new JedisIndex(jedis);
-		
+
 		loadIndex(index);
 	}
-	
+
 	/**
 	 * Loads the index with two pages read from files.
-	 * 
+	 *
 	 * @return
 	 * @throws IOException
 	 */
@@ -49,7 +49,7 @@ public class JedisIndexTest {
 		url1 = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 		Elements paragraphs = wf.readWikipedia(url1);
 		index.indexPage(url1, paragraphs);
-		
+
 		url2 = "https://en.wikipedia.org/wiki/Programming_language";
 		paragraphs = wf.readWikipedia(url2);
 		index.indexPage(url2, paragraphs);
